@@ -1,4 +1,7 @@
 # DiffText
+
+**Accepted by Computer Vision and Image Understanding**
+
 The implementation of Enhancing Scene Text Detectors with Realistic Text Image Synthesis Using Diffusion
 Models
 
