@@ -1,0 +1,19 @@
+export MODEL_NAME="stabilityai/stable-diffusion-2-inpainting"
+export TRAIN_DIR="/home/lfu/project/preprocessing_scene_text/text_diffusion_data_v5"
+
+NCCL_DEBUG=INFO NCCL_P2P_DISABLE=1 accelerate launch --main_process_port 22345 --mixed_precision="fp16" src/engines/finetune_text_to_image_inpainting_with_full_controlnet_with_dual_text.py \
+	--pretrained_model_name_or_path=$MODEL_NAME \
+	--train_data_dir=$TRAIN_DIR \
+	--cache_dir="/data/lfu/cache_dir/diffusers" \
+	--dataloader_num_workers 32 \
+	--use_ema \
+	--resolution=512 --center_crop --random_flip \
+	--train_batch_size=8 \
+	--gradient_accumulation_steps=4 \
+	--gradient_checkpointing \
+	--enable_xformers_memory_efficient_attention \
+	--num_train_epochs=10 \
+	--learning_rate=1e-06 \
+	--max_grad_norm=1 \
+	--lr_scheduler="constant" --lr_warmup_steps=0 \
+	--output_dir="output/0508_full_controlnet_dual_text_fix_scale_lr_1e-6"
